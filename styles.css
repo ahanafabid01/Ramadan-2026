@@ -1,0 +1,439 @@
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #7a5c20;
+    --deep: #0a0d1a;
+    --midnight: #080b16;
+    --surface: #0f1526;
+    --card: #131929;
+    --border: rgba(201,168,76,0.2);
+    --text: #e8e0d0;
+    --muted: #8a7d6a;
+    --sehri: #4a9eff;
+    --iftar: #ff7a45;
+    --green: #3ddc84;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--midnight);
+    color: var(--text);
+    font-family: 'Noto Sans Bengali', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield */
+  .starfield {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background: radial-gradient(ellipse at 20% 20%, #1a1030 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, #0d1a30 0%, transparent 50%),
+                var(--midnight);
+  }
+  .star {
+    position: absolute; border-radius: 50%;
+    background: white; animation: twinkle var(--d, 3s) ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--min, 0.2); transform: scale(1); }
+    50% { opacity: var(--max, 0.8); transform: scale(1.3); }
+  }
+
+  .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 40px 0 30px;
+    position: relative;
+  }
+  .crescent {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 8px;
+    animation: moonFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.6));
+  }
+  @keyframes moonFloat {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-8px) rotate(5deg); }
+  }
+  .header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), #a07530);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .header .subtitle {
+    color: var(--muted); font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
+  .ornament {
+    display: flex; align-items: center; gap: 12px;
+    justify-content: center; margin: 16px 0;
+  }
+  .ornament-line { flex: 1; max-width: 120px; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .ornament-line.rev { background: linear-gradient(to left, transparent, var(--gold)); }
+  .ornament span { color: var(--gold); font-size: 1.2rem; }
+
+  /* Location panel */
+  .location-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 6px 0 20px;
+  }
+  .location-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .location-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .location-field span {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .location-field select {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: 'Noto Sans Bengali', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .location-field select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.2);
+  }
+  .location-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  #offsetNote {
+    color: var(--gold-light);
+  }
+  #currentClock {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .location-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .download-btn {
+    border: 1px solid var(--gold-dim);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--deep);
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .download-btn.secondary {
+    background: transparent;
+    color: var(--gold-light);
+    border-color: rgba(201, 168, 76, 0.45);
+  }
+  .download-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Today Card */
+  .today-card {
+    background: linear-gradient(135deg, #131929 0%, #1a2240 50%, #131929 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(201,168,76,0.08), inset 0 1px 0 rgba(201,168,76,0.15);
+  }
+  .today-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent 340deg, rgba(201,168,76,0.03) 360deg);
+    animation: rotate 20s linear infinite;
+  }
+  @keyframes rotate { to { transform: rotate(360deg); } }
+
+  .today-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+  }
+  .today-date {
+    font-family: 'Amiri', serif;
+  }
+  .today-date .day-name { color: var(--gold-light); font-size: 1.4rem; font-weight: 700; }
+  .today-date .date-full { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+  .ramadan-day {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    border-radius: 50px; padding: 6px 16px;
+    font-size: 0.85rem; font-weight: 600; color: var(--deep);
+  }
+
+  .timings-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; position: relative; z-index: 1;
+  }
+  .timing-box {
+    border-radius: 14px; padding: 16px 18px;
+    position: relative; overflow: hidden;
+  }
+  .timing-box.sehri {
+    background: linear-gradient(135deg, rgba(74,158,255,0.1), rgba(74,158,255,0.05));
+    border: 1px solid rgba(74,158,255,0.25);
+  }
+  .timing-box.iftar {
+    background: linear-gradient(135deg, rgba(255,122,69,0.1), rgba(255,122,69,0.05));
+    border: 1px solid rgba(255,122,69,0.25);
+  }
+  .timing-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; font-weight: 600; margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .timing-box.sehri .timing-label { color: var(--sehri); }
+  .timing-box.iftar .timing-label { color: var(--iftar); }
+  .timing-time {
+    font-family: 'Amiri', serif;
+    font-size: 2.2rem; font-weight: 700; line-height: 1;
+  }
+  .timing-box.sehri .timing-time { color: var(--sehri); }
+  .timing-box.iftar .timing-time { color: var(--iftar); }
+  .timing-sub { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+  /* Live Timer */
+  .live-timer {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin: 16px 0;
+    text-align: center;
+    position: relative;
+  }
+  .timer-label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .timer-display {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .timer-event {
+    font-size: 0.9rem; margin-top: 8px;
+    font-weight: 600;
+  }
+  .timer-bar-wrap {
+    background: rgba(255,255,255,0.05);
+    border-radius: 100px; height: 4px;
+    margin-top: 14px; overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%; border-radius: 100px;
+    transition: width 1s linear;
+  }
+
+  /* Fajr time */
+  .fajr-row {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px; padding: 10px 14px; margin-top: 14px;
+    position: relative; z-index: 1;
+  }
+  .fajr-row span:first-child { color: var(--gold); font-size: 1.1rem; }
+  .fajr-label { color: var(--muted); font-size: 0.8rem; flex: 1; }
+  .fajr-time { color: var(--gold-light); font-family: 'Amiri', serif; font-size: 1.2rem; font-weight: 700; }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 8px; margin: 24px 0 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 50px; padding: 8px 20px;
+    color: var(--muted); font-family: 'Noto Sans Bengali', sans-serif;
+    font-size: 0.85rem; cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: var(--deep); border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  .zilla-image-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .zilla-image-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .zilla-image-head h3 {
+    font-size: 0.95rem;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  #zillaTimetableImage {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255, 255, 255, 0.02);
+    min-height: 180px;
+    object-fit: contain;
+  }
+
+  /* Schedule Table */
+  .schedule-wrap { overflow-x: auto; }
+  .schedule-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .schedule-table th {
+    background: linear-gradient(135deg, #1a2240, #151d35);
+    color: var(--gold-light);
+    padding: 12px 10px; text-align: center;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--gold-dim);
+    white-space: nowrap;
+  }
+  .schedule-table td {
+    padding: 10px 10px; text-align: center;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    transition: background 0.2s;
+  }
+  .schedule-table tr:hover td { background: rgba(201,168,76,0.04); }
+  .schedule-table tr.today-row td {
+    background: linear-gradient(90deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06), rgba(201,168,76,0.12));
+    border-top: 1px solid rgba(201,168,76,0.3);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .schedule-table tr.today-row .day-num {
+    background: var(--gold); color: var(--deep);
+    border-radius: 50%; width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .col-sehri { color: var(--sehri); }
+  .col-fajr { color: var(--gold-light); }
+  .col-iftar { color: var(--iftar); }
+  .col-day { color: var(--muted); }
+
+  /* Dua Section */
+  .dua-section { margin-top: 30px; }
+  .dua-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .dua-card::after {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; border-radius: 4px 0 0 4px;
+  }
+  .dua-card.sehri-dua::after { background: var(--sehri); }
+  .dua-card.iftar-dua::after { background: var(--iftar); }
+  .dua-card-title {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .dua-card-title .icon { font-size: 1.4rem; }
+  .dua-card-title h3 {
+    font-size: 1rem; font-weight: 600;
+    color: var(--gold-light);
+  }
+  .dua-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.35rem; text-align: right;
+    line-height: 2.2; color: var(--gold-light);
+    margin-bottom: 14px;
+    direction: rtl;
+  }
+  .dua-bangla {
+    font-size: 0.9rem; line-height: 1.9;
+    color: var(--text); opacity: 0.85;
+    border-top: 1px solid var(--border); padding-top: 12px;
+    margin-bottom: 10px;
+  }
+  .dua-meaning {
+    font-size: 0.8rem; color: var(--muted);
+    font-style: italic; line-height: 1.7;
+  }
+
+  /* Progress ring for today */
+  .progress-ring { display: none; }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 30px 0 20px;
+    color: var(--muted); font-size: 0.75rem;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  .footer .logo { font-size: 1.5rem; margin-bottom: 8px; }
+
+  /* Tab content */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Pulse dot */
+  .pulse {
+    display: inline-block; width: 8px; height: 8px;
+    background: var(--green); border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+    vertical-align: middle; margin-right: 6px;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+  }
+
+  @media (max-width: 480px) {
+    .location-grid { grid-template-columns: 1fr; }
+    .location-meta { flex-direction: column; align-items: flex-start; }
+    .location-actions { flex-direction: column; }
+    .download-btn { width: 100%; text-align: center; }
+    .timings-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .timing-time { font-size: 1.7rem; }
+    .schedule-table { font-size: 0.82rem; }
+    .schedule-table th, .schedule-table td { padding: 8px 6px; }
+  }

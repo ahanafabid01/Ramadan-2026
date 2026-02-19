@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>রমজান ২০২৬ - সাহরী ও ইফতারের সময়সূচি | ঢাকা</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="starfield" id="starfield"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="crescent">🌙</span>
+    <h1>রমজান মাস ১৪৪৭</h1>
+    <p class="subtitle" id="locationSubtitle">পবিত্র মাহে রমযান — ২০২৬ খ্রিস্টাব্দ | ঢাকা জেলা</p>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <span>✦</span>
+      <div class="ornament-line rev"></div>
+    </div>
+    <p class="subtitle" style="font-size:0.78rem; opacity:0.7;">ইসলামিক ফাউন্ডেশন বাংলাদেশ কর্তৃক অনুমোদিত</p>
+  </div>
+
+  <!-- Location Selector -->
+  <div class="location-panel">
+    <div class="location-grid">
+      <label class="location-field">
+        <span>Division</span>
+        <select id="divisionSelect" aria-label="Select Division"></select>
+      </label>
+      <label class="location-field">
+        <span>Zilla</span>
+        <select id="zillaSelect" aria-label="Select Zilla"></select>
+      </label>
+    </div>
+    <div class="location-meta">
+      <span id="offsetNote">Dhaka reference time</span>
+      <span id="currentClock">BST --:--:--</span>
+    </div>
+    <div class="location-actions">
+      <a id="downloadImageBtn" class="download-btn" href="#" download>Download Timetable Image</a>
+      <button id="downloadTimerBtn" class="download-btn secondary" type="button">Download Live Timer</button>
+    </div>
+  </div>
+
+  <!-- Today Card -->
+  <div class="today-card">
+    <div class="today-header">
+      <div class="today-date">
+        <div class="day-name" id="todayDayName">—</div>
+        <div class="date-full" id="todayDateFull">—</div>
+      </div>
+      <div class="ramadan-day" id="todayRamadanDay">রমজান — </div>
+    </div>
+
+    <div class="timings-row">
+      <div class="timing-box sehri">
+        <div class="timing-label">🌅 সাহরীর শেষ সময়</div>
+        <div class="timing-time" id="todaySehri">—</div>
+        <div class="timing-sub">সূর্যোদয়ের পূর্বে</div>
+      </div>
+      <div class="timing-box iftar">
+        <div class="timing-label">🌇 ইফতারের সময়</div>
+        <div class="timing-time" id="todayIftar">—</div>
+        <div class="timing-sub">মাগরিবের আযান</div>
+      </div>
+    </div>
+
+    <div class="fajr-row">
+      <span>🕌</span>
+      <span class="fajr-label">ফজরের আযান</span>
+      <span class="fajr-time" id="todayFajr">—</span>
+    </div>
+  </div>
+
+  <!-- Live Timer -->
+  <div class="live-timer">
+    <div class="timer-label"><span class="pulse"></span>লাইভ কাউন্টডাউন</div>
+    <div class="timer-display" id="timerDisplay">--:--:--</div>
+    <div class="timer-event" id="timerEvent">—</div>
+    <div class="timer-bar-wrap">
+      <div class="timer-bar" id="timerBar" style="width:50%;"></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('schedule', this)">📅 সময়সূচি</button>
+    <button class="tab-btn" onclick="showTab('dua', this)">🤲 দোয়া</button>
+  </div>
+
+  <!-- Schedule Tab -->
+  <div class="tab-content active" id="tab-schedule">
+    <div class="zilla-image-card">
+      <div class="zilla-image-head">
+        <h3 id="timetableTitle">Zilla Timetable</h3>
+      </div>
+      <img id="zillaTimetableImage" src="" alt="Selected zilla Ramadan timetable" loading="lazy">
+    </div>
+
+    <div class="schedule-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>রমজান</th>
+            <th>তারিখ</th>
+            <th class="col-sehri">সাহরীর শেষ</th>
+            <th class="col-fajr">ফজরের আযান</th>
+            <th class="col-iftar">ইফতার</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Dua Tab -->
+  <div class="tab-content" id="tab-dua">
+    <div class="dua-section">
+
+      <div class="dua-card sehri-dua">
+        <div class="dua-card-title">
+          <span class="icon">🌙</span>
+          <h3>সাহরীর দোয়া</h3>
+        </div>
+        <div class="dua-arabic">
+          وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ
+        </div>
+        <div class="dua-bangla">
+          <strong>উচ্চারণ:</strong> ওয়া বিসাওমি গাদিন নাওয়াইতু মিন শাহরি রামাদান।
+        </div>
+        <div class="dua-meaning">
+          <strong>অর্থ:</strong> আমি আগামীকাল রমজান মাসের রোজা রাখার নিয়ত করলাম।
+        </div>
+      </div>
+
+      <div class="dua-card iftar-dua">
+        <div class="dua-card-title">
+          <span class="icon">🌅</span>
+          <h3>ইফতারের দোয়া</h3>
+        </div>
+        <div class="dua-arabic">
+          اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ
+        </div>
+        <div class="dua-bangla">
+          <strong>উচ্চারণ:</strong> আল্লাহুম্মা ইন্নি লাকা সুমতু ওয়াবিকা আমান্তু ওয়া আলাইকা তাওয়াক্কালতু ওয়া আলা রিযকিকা আফতারতু।
+        </div>
+        <div class="dua-meaning">
+          <strong>অর্থ:</strong> হে আল্লাহ! আমি তোমারই জন্য রোজা রেখেছি, তোমারই প্রতি ঈমান এনেছি, তোমারই উপর ভরসা করেছি এবং তোমার রিজিক দ্বারাই ইফতার করেছি।
+        </div>
+      </div>
+
+      <div class="dua-card" style="border-left: 4px solid var(--green);">
+        <div class="dua-card-title">
+          <span class="icon">⭐</span>
+          <h3>রমজানের বিশেষ দোয়া</h3>
+        </div>
+        <div class="dua-arabic" style="font-size:1.15rem;">
+          اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي
+        </div>
+        <div class="dua-bangla">
+          <strong>উচ্চারণ:</strong> আল্লাহুম্মা ইন্নাকা আফুউউন তুহিব্বুল আফওয়া ফা'ফু আন্নি।
+        </div>
+        <div class="dua-meaning">
+          <strong>অর্থ:</strong> হে আল্লাহ! তুমি ক্ষমাশীল, তুমি ক্ষমা পছন্দ কর, সুতরাং আমাকে ক্ষমা করে দাও। (বিশেষত লাইলাতুল কদরে পড়ার দোয়া)
+        </div>
+      </div>
+
+      <div class="dua-card" style="border-left: 4px solid #c084fc;">
+        <div class="dua-card-title">
+          <span class="icon">🤲</span>
+          <h3>রোজাদারের ইফতার করানোর ফজিলত</h3>
+        </div>
+        <div class="dua-bangla" style="border-top: none; padding-top: 0; font-size:0.9rem; line-height:2;">
+          রাসূলুল্লাহ ﷺ বলেছেন: যে ব্যক্তি কোনো রোজাদারকে ইফতার করায়, সে রোজাদারের সমান সওয়াব পাবে, অথচ রোজাদারের সওয়াব থেকে কিছু কমানো হবে না।
+          <br><br>
+          <em style="color: var(--muted);">— তিরমিযী, হাদীস: ৮০৭</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="logo">☪️</div>
+    <p id="footerLocationText">ইসলামিক ফাউন্ডেশন বাংলাদেশ | ঢাকা জেলার সময়সূচি</p>
+    <p style="margin-top:4px; opacity:0.6;">পবিত্র মাহে রমজান ১৪৪৭ হিজরী — ২০২৬ খ্রিস্টাব্দ</p>
+  </div>
+
+</div>
+<script src="main.js"></script>
+
+</body>
+</html>
